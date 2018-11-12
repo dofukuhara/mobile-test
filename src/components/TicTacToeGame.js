@@ -8,14 +8,6 @@ import {
     Alert, AsyncStorage, TouchableOpacity
 } from 'react-native';
 
-/* Pega a largura do device */
-//const deviceScreenWidth = Dimensions.get('screen').width;
-//const deviceScreenHeight = Dimensions.get('screen').height;
-/*
-const deviceWindowWidth = Dimensions.get('window').width;
-const deviceWindowHeight = Dimensions.get('window').height;
-*/
-
 /*
     Getting the screen width and height, in order
     to dinamically calculate the size of the cell,
@@ -76,12 +68,14 @@ const DIAG_OPTION_OK = 'OK'
 const DIAG_OPTION_CANCEL = 'Cancel'
 const DIAG_TITLE_CONGRATS = 'Thank U!'
 const DIAG_MSG_HOPE_ENJOYING = 'Wow, you played me for ' + engagingCounter + ' times! Hope you are having fun! :)'
+// [End] String resources
 
 export default class TicTacToeGame extends Component {
 
     constructor() {
         super();
 
+        // Fecthing number of played games saved in AsyncStorage during app initialization
         this.retrieveNumberOfPlayedTimes()
     }
 
@@ -124,6 +118,10 @@ export default class TicTacToeGame extends Component {
         gameWinnerString: PLAYER_WINNER_DEFAULT
     };
 
+    /*
+        Function to retrieve the number of played games and update the state
+        with this information
+    */
     retrieveNumberOfPlayedTimes = async() => {
         try {
             const value = await AsyncStorage.getItem(GAME_COUNTER_ASYNC_KEY);
@@ -138,6 +136,10 @@ export default class TicTacToeGame extends Component {
         }
     }
 
+    /*
+        Function that reads the number of played games that is stored in a
+        local variable, updates it and save in AsyncStorage
+    */
     updateNumberOfPlayedTimes = async() => {
         try {
             let playedGames = parseInt(numberOfPlayedGames, 10)
@@ -307,6 +309,7 @@ export default class TicTacToeGame extends Component {
             this.state.gameButton = BTN_START_NEW_GAME
             isGameStarted = false
 
+            // Only after game is finished that we can update the number of played times
             this.updateNumberOfPlayedTimes()
         }
 
@@ -330,6 +333,7 @@ export default class TicTacToeGame extends Component {
             this.state.gameButton = BTN_START_NEW_GAME
             isGameStarted = false
 
+            // Only after game is finished that we can update the number of played times
             this.updateNumberOfPlayedTimes()
         }
     }
